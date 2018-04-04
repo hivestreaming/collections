@@ -90,16 +90,6 @@ define("has", function (value, equals) {
     return this.find(value, equals) !== -1;
 });
 
-define("get", function (index, defaultValue) {
-    if (+index !== index)
-        throw new Error("Indicies must be numbers");
-    if (!index in this) {
-        return defaultValue;
-    } else {
-        return this[index];
-    }
-});
-
 define("set", function (index, value) {
     this[index] = value;
     return true;
