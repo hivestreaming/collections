@@ -23,7 +23,7 @@ if (Object.freeze) {
     Object.freeze(Array.empty);
 }
 
-Array.from = function (values) {
+Array.from = Array.from || function (values) {
     var array = [];
     array.addEach(values);
     return array;
