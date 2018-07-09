@@ -8,16 +8,16 @@ var fuzzDeque = require("./deque-fuzz").fuzzDeque;
 module.exports = describeDeque;
 function describeDeque(Deque) {
 
-    describe("add(value)", function () {
+    describe("hiveAdd(value)", function () {
         it("should be an alias for push", function () {
             var collection = Deque([1, 2, 3]);
-            collection.add(4);
+            collection.hiveAdd(4);
             expect(collection.toArray()).toEqual([1, 2, 3, 4]);
         });
     });
 
     describe("push(value)", function () {
-        it("should add one value to the end", function () {
+        it("should hiveAdd one value to the end", function () {
             var collection = Deque([1, 2, 3]);
             collection.push(4);
             expect(collection.toArray()).toEqual([1, 2, 3, 4]);
@@ -25,13 +25,13 @@ function describeDeque(Deque) {
     });
 
     describe("push(...values)", function () {
-        it("should add many values to the end", function () {
+        it("should hiveAdd many values to the end", function () {
             var collection = Deque([1, 2, 3]);
             collection.push(4, 5, 6);
             expect(collection.toArray()).toEqual([1, 2, 3, 4, 5, 6]);
         });
 
-        it("should add many values to the end variadically", function () {
+        it("should hiveAdd many values to the end variadically", function () {
             var collection = Deque([1, 2, 3]);
             collection.push.apply(collection, [4, 5, 6]);
             expect(collection.toArray()).toEqual([1, 2, 3, 4, 5, 6]);
@@ -39,7 +39,7 @@ function describeDeque(Deque) {
     });
 
     describe("unshift(value)", function () {
-        it("should add a value to the beginning", function () {
+        it("should hiveAdd a value to the beginning", function () {
             var collection = Deque([1, 2, 3]);
             collection.unshift(0);
             expect(collection.toArray()).toEqual([0, 1, 2, 3]);
@@ -47,13 +47,13 @@ function describeDeque(Deque) {
     });
 
     describe("unshift(...values)", function () {
-        it("should add many values to the beginning", function () {
+        it("should hiveAdd many values to the beginning", function () {
             var collection = Deque([1, 2, 3]);
             collection.unshift(-2, -1, 0);
             expect(collection.toArray()).toEqual([-2, -1, 0, 1, 2, 3]);
         });
 
-        it("should add many values to the beginning", function () {
+        it("should hiveAdd many values to the beginning", function () {
             var collection = Deque([1, 2, 3]);
             collection.unshift.apply(collection, [-2, -1, 0]);
             expect(collection.toArray()).toEqual([-2, -1, 0, 1, 2, 3]);

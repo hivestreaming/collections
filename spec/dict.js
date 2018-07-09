@@ -51,7 +51,7 @@ function describeDict(Dict) {
         var listener = function(value, key) {
             expect(value).toBe(2);
         };
-        dict.addMapChangeListener(listener);
+        dict.hiveAddMapChangeListener(listener);
         dict.set('a', 2);
     })
 }

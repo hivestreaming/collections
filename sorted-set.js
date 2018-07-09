@@ -18,16 +18,16 @@ function SortedSet(values, equals, compare, getDefault) {
     this.getDefault = getDefault || Function.noop;
     this.root = null;
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 // hack so require("sorted-set").SortedSet will work in MontageJS
 SortedSet.SortedSet = SortedSet;
 
-Object.addEach(SortedSet.prototype, GenericCollection.prototype);
-Object.addEach(SortedSet.prototype, GenericSet.prototype);
-Object.addEach(SortedSet.prototype, PropertyChanges.prototype);
-Object.addEach(SortedSet.prototype, RangeChanges.prototype);
+Object.hiveAddEach(SortedSet.prototype, GenericCollection.prototype);
+Object.hiveAddEach(SortedSet.prototype, GenericSet.prototype);
+Object.hiveAddEach(SortedSet.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(SortedSet.prototype, RangeChanges.prototype);
 
 SortedSet.prototype.isSorted = true;
 
@@ -65,7 +65,7 @@ SortedSet.prototype.get = function (value, equals) {
     return this.getDefault(value);
 };
 
-SortedSet.prototype.add = function (value) {
+SortedSet.prototype.hiveAdd = function (value) {
     var node = new this.Node(value);
     if (this.root) {
         this.splay(value);
@@ -272,11 +272,11 @@ SortedSet.prototype.shift = function () {
 };
 
 SortedSet.prototype.push = function () {
-    this.addEach(arguments);
+    this.hiveAddEach(arguments);
 };
 
 SortedSet.prototype.unshift = function () {
-    this.addEach(arguments);
+    this.hiveAddEach(arguments);
 };
 
 SortedSet.prototype.slice = function (start, end) {
@@ -338,7 +338,7 @@ SortedSet.prototype.swap = function (start, length, plus) {
     }
 
     // plus
-    this.addEach(plus);
+    this.hiveAddEach(plus);
 
     return swapped;
 };

@@ -7,9 +7,9 @@ console.log(set.toArray());
 set.get(2);
 console.log(set.toArray());
 
-set.add(4);
+set.hiveAdd(4);
 console.log(set.toArray());
 
-set.add(2);
+set.hiveAdd(2);
 console.log(set.toArray());
 

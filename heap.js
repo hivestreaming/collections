@@ -21,15 +21,15 @@ function Heap(values, equals, compare) {
     this.contentCompare = compare || Object.compare;
     this.content = [];
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 Heap.Heap = Heap; // hack so require("heap").Heap will work in MontageJS
 
-Object.addEach(Heap.prototype, GenericCollection.prototype);
-Object.addEach(Heap.prototype, PropertyChanges.prototype);
-Object.addEach(Heap.prototype, RangeChanges.prototype);
-Object.addEach(Heap.prototype, MapChanges.prototype);
+Object.hiveAddEach(Heap.prototype, GenericCollection.prototype);
+Object.hiveAddEach(Heap.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(Heap.prototype, RangeChanges.prototype);
+Object.hiveAddEach(Heap.prototype, MapChanges.prototype);
 
 Heap.prototype.constructClone = function (values) {
     return new this.constructor(
@@ -65,7 +65,7 @@ Heap.prototype.pop = function () {
     return result;
 };
 
-Heap.prototype.add = function (value) {
+Heap.prototype.hiveAdd = function (value) {
     this.push(value);
 };
 
@@ -220,10 +220,10 @@ Heap.prototype.toJSON = function () {
 
 Heap.prototype.makeObservable = function () {
     // TODO refactor dispatchers to allow direct forwarding
-    this.content.addRangeChangeListener(this, "content");
-    this.content.addBeforeRangeChangeListener(this, "content");
-    this.content.addMapChangeListener(this, "content");
-    this.content.addBeforeMapChangeListener(this, "content");
+    this.content.hiveAddRangeChangeListener(this, "content");
+    this.content.hiveAddBeforeRangeChangeListener(this, "content");
+    this.content.hiveAddMapChangeListener(this, "content");
+    this.content.hiveAddBeforeMapChangeListener(this, "content");
 };
 
 Heap.prototype.handleContentRangeChange = function (plus, minus, index) {

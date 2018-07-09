@@ -27,14 +27,14 @@ function FastSet(values, equals, hash, getDefault) {
         return new self.Bucket();
     });
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 FastSet.FastSet = FastSet; // hack so require("fast-set").FastSet will work in MontageJS
 
-Object.addEach(FastSet.prototype, GenericCollection.prototype);
-Object.addEach(FastSet.prototype, GenericSet.prototype);
-Object.addEach(FastSet.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(FastSet.prototype, GenericCollection.prototype);
+Object.hiveAddEach(FastSet.prototype, GenericSet.prototype);
+Object.hiveAddEach(FastSet.prototype, PropertyChanges.prototype);
 
 FastSet.prototype.Buckets = Dict;
 FastSet.prototype.Bucket = List;
@@ -90,14 +90,14 @@ FastSet.prototype.clear = function () {
     this.length = 0;
 };
 
-FastSet.prototype.add = function (value) {
+FastSet.prototype.hiveAdd = function (value) {
     var hash = this.contentHash(value);
     var buckets = this.buckets;
     if (!buckets.has(hash)) {
         buckets.set(hash, new this.Bucket(null, this.contentEquals));
     }
     if (!buckets.get(hash).has(value)) {
-        buckets.get(hash).add(value);
+        buckets.get(hash).hiveAdd(value);
         this.length++;
         return true;
     }

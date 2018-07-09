@@ -15,27 +15,27 @@ describe("Array change dispatch", function () {
 
     it("set up listeners", function () {
 
-        array.addBeforeOwnPropertyChangeListener("length", function (length) {
+        array.hiveAddBeforeOwnPropertyChangeListener("length", function (length) {
             spy("length change from", length);
         });
 
-        array.addOwnPropertyChangeListener("length", function (length) {
+        array.hiveAddOwnPropertyChangeListener("length", function (length) {
             spy("length change to", length);
         });
 
-        array.addBeforeRangeChangeListener(function (plus, minus, index) {
-            spy("before content change at", index, "to add", plus.slice(), "to remove", minus.slice());
+        array.hiveAddBeforeRangeChangeListener(function (plus, minus, index) {
+            spy("before content change at", index, "to hiveAdd", plus.slice(), "to remove", minus.slice());
         });
 
-        array.addRangeChangeListener(function (plus, minus, index) {
-            spy("content change at", index, "added", plus.slice(), "removed", minus.slice());
+        array.hiveAddRangeChangeListener(function (plus, minus, index) {
+            spy("content change at", index, "hiveAdded", plus.slice(), "removed", minus.slice());
         });
 
-        array.addBeforeMapChangeListener(function (value, key) {
+        array.hiveAddBeforeMapChangeListener(function (value, key) {
             spy("change at", key, "from", value);
         });
 
-        array.addMapChangeListener(function (value, key) {
+        array.hiveAddMapChangeListener(function (value, key) {
             spy("change at", key, "to", value);
         });
 
@@ -44,7 +44,7 @@ describe("Array change dispatch", function () {
     it("change dispatch properties should not be enumerable", function () {
         // this verifies that dispatchesRangeChanges and dispatchesMapChanges
         // are both non-enumerable, and any other properties that might get
-        // added in the future.
+        // hiveAdded in the future.
         for (var name in array) {
             expect(isNaN(+name)).toBe(false);
         }
@@ -57,14 +57,14 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 3],
-            ["before content change at", 0, "to add", [], "to remove", [1, 2, 3]],
+            ["before content change at", 0, "to hiveAdd", [], "to remove", [1, 2, 3]],
             ["change at", 0, "from", 1],
             ["change at", 1, "from", 2],
             ["change at", 2, "from", 3],
             ["change at", 0, "to", undefined],
             ["change at", 1, "to", undefined],
             ["change at", 2, "to", undefined],
-            ["content change at", 0, "added", [], "removed", [1, 2, 3]],
+            ["content change at", 0, "hiveAdded", [], "removed", [1, 2, 3]],
             ["length change to", 0]
         ]);
     });
@@ -76,12 +76,12 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10, 20]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 0],
-            ["before content change at", 0, "to add", [10, 20], "to remove", []],
+            ["before content change at", 0, "to hiveAdd", [10, 20], "to remove", []],
             ["change at", 0, "from", undefined],
             ["change at", 1, "from", undefined],
             ["change at", 0, "to", 10],
             ["change at", 1, "to", 20],
-            ["content change at", 0, "added", [10, 20], "removed", []],
+            ["content change at", 0, "hiveAdded", [10, 20], "removed", []],
             ["length change to", 2],
         ]);
 
@@ -94,10 +94,10 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 2],
-            ["before content change at", 1, "to add", [], "to remove", [20]],
+            ["before content change at", 1, "to hiveAdd", [], "to remove", [20]],
             ["change at", 1, "from", 20],
             ["change at", 1, "to", undefined],
-            ["content change at", 1, "added", [], "removed", [20]],
+            ["content change at", 1, "hiveAdded", [], "removed", [20]],
             ["length change to", 1],
         ]);
     });
@@ -109,12 +109,12 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10, 40, 50]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 1],
-            ["before content change at", 1, "to add", [40, 50], "to remove", []],
+            ["before content change at", 1, "to hiveAdd", [40, 50], "to remove", []],
             ["change at", 1, "from", undefined],
             ["change at", 2, "from", undefined],
             ["change at", 1, "to", 40],
             ["change at", 2, "to", 50],
-            ["content change at", 1, "added", [40, 50], "removed", []],
+            ["content change at", 1, "hiveAdded", [40, 50], "removed", []],
             ["length change to", 3]
         ]);
     });
@@ -126,7 +126,7 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10, 20, 30, 40, 50]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 3],
-            ["before content change at", 1, "to add", [20, 30], "to remove", []],
+            ["before content change at", 1, "to hiveAdd", [20, 30], "to remove", []],
             ["change at", 1, "from", 40],
             ["change at", 2, "from", 50],
             ["change at", 3, "from", undefined],
@@ -135,7 +135,7 @@ describe("Array change dispatch", function () {
             ["change at", 2, "to", 30],
             ["change at", 3, "to", 40],
             ["change at", 4, "to", 50],
-            ["content change at", 1, "added", [20, 30], "removed", []],
+            ["content change at", 1, "hiveAdded", [20, 30], "removed", []],
             ["length change to", 5]
         ]);
     });
@@ -147,10 +147,10 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10, 20, 30, 40, 50, 60]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 5],
-            ["before content change at", 5, "to add", [60], "to remove", []],
+            ["before content change at", 5, "to hiveAdd", [60], "to remove", []],
             ["change at", 5, "from", undefined],
             ["change at", 5, "to", 60],
-            ["content change at", 5, "added", [60], "removed", []],
+            ["content change at", 5, "hiveAdded", [60], "removed", []],
             ["length change to", 6]
         ]);
     });
@@ -162,12 +162,12 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10, 20, "A", "B", 50, 60]);
         expect(spy.argsForCall).toEqual([
             // no length change
-            ["before content change at", 2, "to add", ["A", "B"], "to remove", [30, 40]],
+            ["before content change at", 2, "to hiveAdd", ["A", "B"], "to remove", [30, 40]],
             ["change at", 2, "from", 30],
             ["change at", 3, "from", 40],
             ["change at", 2, "to", "A"],
             ["change at", 3, "to", "B"],
-            ["content change at", 2, "added", ["A", "B"], "removed", [30, 40]],
+            ["content change at", 2, "hiveAdded", ["A", "B"], "removed", [30, 40]],
         ]);
     });
 
@@ -182,14 +182,14 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([20, 30]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 3],
-            ["before content change at", 0, "to add", [], "to remove", [10]],
+            ["before content change at", 0, "to hiveAdd", [], "to remove", [10]],
             ["change at", 0, "from", 10],
             ["change at", 1, "from", 20],
             ["change at", 2, "from", 30],
             ["change at", 0, "to", 20],
             ["change at", 1, "to", 30],
             ["change at", 2, "to", undefined],
-            ["content change at", 0, "added", [], "removed", [10]],
+            ["content change at", 0, "hiveAdded", [], "removed", [10]],
             ["length change to", 2]
         ]);
     });
@@ -201,10 +201,10 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([20, 30, 40]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 2],
-            ["before content change at", 2, "to add", [40], "to remove", []],
+            ["before content change at", 2, "to hiveAdd", [40], "to remove", []],
             ["change at", 2, "from", undefined],
             ["change at", 2, "to", 40],
-            ["content change at", 2, "added", [40], "removed", []],
+            ["content change at", 2, "hiveAdded", [40], "removed", []],
             ["length change to", 3]
         ]);
     });
@@ -215,10 +215,10 @@ describe("Array change dispatch", function () {
         expect(array.set(0, 10)).toBe(true);
         expect(array).toEqual([10, 30, 40]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 0, "to add", [10], "to remove", [20]],
+            ["before content change at", 0, "to hiveAdd", [10], "to remove", [20]],
             ["change at", 0, "from", 20],
             ["change at", 0, "to", 10],
-            ["content change at", 0, "added", [10], "removed", [20]]
+            ["content change at", 0, "hiveAdded", [10], "removed", [20]]
         ]);
     });
 
@@ -232,10 +232,10 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10, 20, 30, 50]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 3],
-            ["before content change at", 3, "to add", [50], "to remove", []],
+            ["before content change at", 3, "to hiveAdd", [50], "to remove", []],
             ["change at", 3, "from", undefined],
             ["change at", 3, "to", 50],
-            ["content change at", 3, "added", [50], "removed", []],
+            ["content change at", 3, "hiveAdded", [50], "removed", []],
             ["length change to", 4]
        ]);
     });
@@ -250,10 +250,10 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([30]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 0],
-            ["before content change at", 0, "to add", [30], "to remove", []],
+            ["before content change at", 0, "to hiveAdd", [30], "to remove", []],
             ["change at", 0, "from", undefined],
             ["change at", 0, "to", 30],
-            ["content change at", 0, "added", [30], "removed", []],
+            ["content change at", 0, "hiveAdded", [30], "removed", []],
             ["length change to", 1]
         ]);
     });
@@ -265,15 +265,15 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10, 20, 30]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 1],
-            // added and removed values reflect the ending values, not the values at the time of the call
-            ["before content change at", 0, "to add", [10, 20], "to remove", []],
+            // hiveAdded and removed values reflect the ending values, not the values at the time of the call
+            ["before content change at", 0, "to hiveAdd", [10, 20], "to remove", []],
             ["change at", 0, "from", 30],
             ["change at", 1, "from", undefined],
             ["change at", 2, "from", undefined],
             ["change at", 0, "to", 10],
             ["change at", 1, "to", 20],
             ["change at", 2, "to", 30],
-            ["content change at", 0, "added", [10, 20], "removed", []],
+            ["content change at", 0, "hiveAdded", [10, 20], "removed", []],
             ["length change to", 3]
         ]);
     });
@@ -284,14 +284,14 @@ describe("Array change dispatch", function () {
         array.reverse();
         expect(array).toEqual([30, 20, 10]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 0, "to add", [30, 20, 10], "to remove", [10, 20, 30]],
+            ["before content change at", 0, "to hiveAdd", [30, 20, 10], "to remove", [10, 20, 30]],
             ["change at", 0, "from", 10],
             ["change at", 1, "from", 20],
             ["change at", 2, "from", 30],
             ["change at", 0, "to", 30],
             ["change at", 1, "to", 20],
             ["change at", 2, "to", 10],
-            ["content change at", 0, "added", [30, 20, 10], "removed", [10, 20, 30]],
+            ["content change at", 0, "hiveAdded", [30, 20, 10], "removed", [10, 20, 30]],
         ]);
     });
 
@@ -301,15 +301,15 @@ describe("Array change dispatch", function () {
         array.sort();
         expect(array).toEqual([10, 20, 30]);
         expect(spy.argsForCall).toEqual([
-            // added and removed values reflect the ending values, not the values at the time of the call
-            ["before content change at", 0, "to add", [30, 20, 10], "to remove", [30, 20, 10]],
+            // hiveAdded and removed values reflect the ending values, not the values at the time of the call
+            ["before content change at", 0, "to hiveAdd", [30, 20, 10], "to remove", [30, 20, 10]],
             ["change at", 0, "from", 30],
             ["change at", 1, "from", 20],
             ["change at", 2, "from", 10],
             ["change at", 0, "to", 10],
             ["change at", 1, "to", 20],
             ["change at", 2, "to", 30],
-            ["content change at", 0, "added", [10, 20, 30], "removed", [10, 20, 30]],
+            ["content change at", 0, "hiveAdded", [10, 20, 30], "removed", [10, 20, 30]],
         ]);
     });
 
@@ -321,12 +321,12 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10, 30]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 3],
-            ["before content change at", 1, "to add", [], "to remove", [20]],
+            ["before content change at", 1, "to hiveAdd", [], "to remove", [20]],
             ["change at", 1, "from", 20],
             ["change at", 2, "from", 30],
             ["change at", 1, "to", 30],
             ["change at", 2, "to", undefined],
-            ["content change at", 1, "added", [], "removed", [20]],
+            ["content change at", 1, "hiveAdded", [], "removed", [20]],
             ["length change to", 2]
         ]);
     });
@@ -338,12 +338,12 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([10, 30, , 40]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 2],
-            ["before content change at", 2, "to add", [ , 40], "to remove", []],
+            ["before content change at", 2, "to hiveAdd", [ , 40], "to remove", []],
             ["change at", 2, "from", undefined],
             ["change at", 3, "from", undefined],
             ["change at", 2, "to", undefined],
             ["change at", 3, "to", 40],
-            ["content change at", 2, "added", [ , 40], "removed", []],
+            ["content change at", 2, "hiveAdded", [ , 40], "removed", []],
             ["length change to", 4]
         ]);
         array.pop();
@@ -357,12 +357,12 @@ describe("Array change dispatch", function () {
         expect(array).toEqual([]);
         expect(spy.argsForCall).toEqual([
             ["length change from", 2],
-            ["before content change at", 0, "to add", [], "to remove", [10, 30]],
+            ["before content change at", 0, "to hiveAdd", [], "to remove", [10, 30]],
             ["change at", 0, "from", 10],
             ["change at", 1, "from", 30],
             ["change at", 0, "to", undefined],
             ["change at", 1, "to", undefined],
-            ["content change at", 0, "added", [], "removed", [10, 30]],
+            ["content change at", 0, "hiveAdded", [], "removed", [10, 30]],
             ["length change to", 0]
         ]);
     });
@@ -408,14 +408,14 @@ describe("Array change dispatch", function () {
     it("handles cyclic content change listeners", function () {
         var foo = [];
         var bar = [];
-        foo.addRangeChangeListener(function (plus, minus, index) {
+        foo.hiveAddRangeChangeListener(function (plus, minus, index) {
             // if this is a change in response to a change in bar,
             // do not send back
             if (bar.getRangeChangeDescriptor().isActive)
                 return;
             bar.splice.apply(bar, [index, minus.length].concat(plus));
         });
-        bar.addRangeChangeListener(function (plus, minus, index) {
+        bar.hiveAddRangeChangeListener(function (plus, minus, index) {
             if (foo.getRangeChangeDescriptor().isActive)
                 return;
             foo.splice.apply(foo, [index, minus.length].concat(plus));
@@ -429,7 +429,7 @@ describe("Array change dispatch", function () {
     it("observes length changes on arrays that are not otherwised observed", function () {
         var array = [1, 2, 3];
         var spy = jasmine.createSpy();
-        array.addOwnPropertyChangeListener("length", spy);
+        array.hiveAddOwnPropertyChangeListener("length", spy);
         array.push(4);
         expect(spy).toHaveBeenCalled();
     });

@@ -29,14 +29,14 @@ function LfuMap(values, maxLength, equals, hash, getDefault) {
         }
     );
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 LfuMap.LfuMap = LfuMap; // hack so require("lfu-map").LfuMap will work in MontageJS
 
-Object.addEach(LfuMap.prototype, GenericCollection.prototype);
-Object.addEach(LfuMap.prototype, GenericMap.prototype);
-Object.addEach(LfuMap.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(LfuMap.prototype, GenericCollection.prototype);
+Object.hiveAddEach(LfuMap.prototype, GenericMap.prototype);
+Object.hiveAddEach(LfuMap.prototype, PropertyChanges.prototype);
 
 LfuMap.prototype.constructClone = function (values) {
     return new this.constructor(
@@ -57,23 +57,23 @@ LfuMap.prototype.stringify = function (item, leader) {
     return leader + JSON.stringify(item.key) + ": " + JSON.stringify(item.value);
 };
 
-LfuMap.prototype.addMapChangeListener = function () {
+LfuMap.prototype.hiveAddMapChangeListener = function () {
     if (!this.dispatchesMapChanges) {
         // Detect LFU deletions in the LfuSet and emit as MapChanges.
         // Array and Heap have no store.
         // Dict and FastMap define no listeners on their store.
         var self = this;
-        this.store.addBeforeRangeChangeListener(function(plus, minus) {
+        this.store.hiveAddBeforeRangeChangeListener(function(plus, minus) {
             if (plus.length && minus.length) {  // LFU item pruned
                 self.dispatchBeforeMapChange(minus[0].key, undefined);
             }
         });
-        this.store.addRangeChangeListener(function(plus, minus) {
+        this.store.hiveAddRangeChangeListener(function(plus, minus) {
             if (plus.length && minus.length) {
                 self.dispatchMapChange(minus[0].key, undefined);
             }
         });
     }
-    GenericMap.prototype.addMapChangeListener.apply(this, arguments);
+    GenericMap.prototype.hiveAddMapChangeListener.apply(this, arguments);
 };
 

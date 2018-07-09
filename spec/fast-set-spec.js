@@ -18,7 +18,7 @@ describe("Set", function () {
     // Set().get(value)
     // Set().delete(value)
     // Set().clear()
-    // Set().add(value)
+    // Set().hiveAdd(value)
     // Set().reduce(callback, basis, thisp)
     // Set().forEach()
     // Set().map()
@@ -53,10 +53,10 @@ describe("Set", function () {
         };
 
         var set = new Set();
-        set.add(new Item(1, 'a'));
-        set.add(new Item(3, 'b'));
-        set.add(new Item(2, 'c'));
-        set.add(new Item(2, 'd'));
+        set.hiveAdd(new Item(1, 'a'));
+        set.hiveAdd(new Item(3, 'b'));
+        set.hiveAdd(new Item(2, 'c'));
+        set.hiveAdd(new Item(2, 'd'));
 
         expect(set.buckets.keys().sort()).toEqual(['1', '2', '3']);
 

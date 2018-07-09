@@ -9,14 +9,14 @@ function GenericMap() {
     throw new Error("Can't construct. GenericMap is a mixin.");
 }
 
-Object.addEach(GenericMap.prototype, MapChanges.prototype);
-Object.addEach(GenericMap.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(GenericMap.prototype, MapChanges.prototype);
+Object.hiveAddEach(GenericMap.prototype, PropertyChanges.prototype);
 
 // all of these methods depend on the constructor providing a `store` set
 
 GenericMap.prototype.isMap = true;
 
-GenericMap.prototype.addEach = function (values) {
+GenericMap.prototype.hiveAddEach = function (values) {
     if (values && Object(values) === values) {
         if (typeof values.forEach === "function") {
             // copy map-alikes
@@ -34,7 +34,7 @@ GenericMap.prototype.addEach = function (values) {
             // Array-like objects that do not implement forEach, ergo,
             // Arguments
             for (var i = 0; i < values.length; i++) {
-                this.add(values[i], i);
+                this.hiveAdd(values[i], i);
             }
         } else {
             // copy other objects as map-alikes
@@ -45,7 +45,7 @@ GenericMap.prototype.addEach = function (values) {
     } else if (values && typeof values.length === "number") {
         // String
         for (var i = 0; i < values.length; i++) {
-            this.add(values[i], i);
+            this.hiveAdd(values[i], i);
         }
     }
     return this;
@@ -78,7 +78,7 @@ GenericMap.prototype.set = function (key, value) {
         if (this.dispatchesMapChanges) {
             this.dispatchBeforeMapChange(key, undefined);
         }
-        if (this.store.add(item)) {
+        if (this.store.hiveAdd(item)) {
             this.length++;
             grew = true;
         }
@@ -89,7 +89,7 @@ GenericMap.prototype.set = function (key, value) {
     return grew;
 };
 
-GenericMap.prototype.add = function (value, key) {
+GenericMap.prototype.hiveAdd = function (value, key) {
     return this.set(key, value);
 };
 

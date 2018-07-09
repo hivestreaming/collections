@@ -3,7 +3,7 @@ require("../observable-object");
 
 var object = {};
 
-Object.addOwnPropertyChangeListener(object, 'a', function (value, key, object) {
+Object.hiveAddOwnPropertyChangeListener(object, 'a', function (value, key, object) {
     console.log('changed', value);
 });
 

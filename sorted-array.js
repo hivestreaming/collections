@@ -22,15 +22,15 @@ function SortedArray(values, equals, compare, getDefault) {
     this.getDefault = getDefault || Function.noop;
 
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 // hack so require("sorted-array").SortedArray will work in MontageJS
 SortedArray.SortedArray = SortedArray;
 
-Object.addEach(SortedArray.prototype, GenericCollection.prototype);
-Object.addEach(SortedArray.prototype, PropertyChanges.prototype);
-Object.addEach(SortedArray.prototype, RangeChanges.prototype);
+Object.hiveAddEach(SortedArray.prototype, GenericCollection.prototype);
+Object.hiveAddEach(SortedArray.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(SortedArray.prototype, RangeChanges.prototype);
 
 SortedArray.prototype.isSorted = true;
 
@@ -125,7 +125,7 @@ SortedArray.prototype.get = function (value, equals) {
     }
 };
 
-SortedArray.prototype.add = function (value) {
+SortedArray.prototype.hiveAdd = function (value) {
     var index = searchForInsertionIndex(this.array, value, this.contentCompare);
     if (this.dispatchesRangeChanges) {
         this.dispatchBeforeRangeChange([value], [], index);
@@ -220,11 +220,11 @@ SortedArray.prototype.findLast = function (value, equals, index) {
 };
 
 SortedArray.prototype.push = function () {
-    this.addEach(arguments);
+    this.hiveAddEach(arguments);
 };
 
 SortedArray.prototype.unshift = function () {
-    this.addEach(arguments);
+    this.hiveAddEach(arguments);
 };
 
 SortedArray.prototype.pop = function () {
@@ -267,7 +267,7 @@ SortedArray.prototype.swap = function (index, length, plus) {
     if (this.dispatchesRangeChanges) {
         this.dispatchRangeChange([], minus, index);
     }
-    this.addEach(plus);
+    this.hiveAddEach(plus);
     return minus;
 };
 

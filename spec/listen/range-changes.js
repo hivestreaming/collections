@@ -10,20 +10,20 @@ function describeRangeChanges(Collection) {
 
     it("set up listeners", function () {
 
-        collection.addBeforeOwnPropertyChangeListener("length", function (length) {
+        collection.hiveAddBeforeOwnPropertyChangeListener("length", function (length) {
             spy("length change from", length);
         });
 
-        collection.addOwnPropertyChangeListener("length", function (length) {
+        collection.hiveAddOwnPropertyChangeListener("length", function (length) {
             spy("length change to", length);
         });
 
-        collection.addBeforeRangeChangeListener(function (plus, minus, index) {
-            spy("before content change at", index, "to add", plus.slice(), "to remove", minus.slice());
+        collection.hiveAddBeforeRangeChangeListener(function (plus, minus, index) {
+            spy("before content change at", index, "to hiveAdd", plus.slice(), "to remove", minus.slice());
         });
 
-        collection.addRangeChangeListener(function (plus, minus, index) {
-            spy("content change at", index, "added", plus.slice(), "removed", minus.slice());
+        collection.hiveAddRangeChangeListener(function (plus, minus, index) {
+            spy("content change at", index, "hiveAdded", plus.slice(), "removed", minus.slice());
         });
 
     });
@@ -34,10 +34,10 @@ function describeRangeChanges(Collection) {
         collection.clear();
         expect(collection.slice()).toEqual([]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 0, "to add", [], "to remove", [1, 2, 3]],
+            ["before content change at", 0, "to hiveAdd", [], "to remove", [1, 2, 3]],
             ["length change from", 3],
             ["length change to", 0],
-            ["content change at", 0, "added", [], "removed", [1, 2, 3]],
+            ["content change at", 0, "hiveAdded", [], "removed", [1, 2, 3]],
         ]);
     });
 
@@ -47,10 +47,10 @@ function describeRangeChanges(Collection) {
         collection.push(10, 20);
         expect(collection.slice()).toEqual([10, 20]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 0, "to add", [10, 20], "to remove", []],
+            ["before content change at", 0, "to hiveAdd", [10, 20], "to remove", []],
             ["length change from", 0],
             ["length change to", 2],
-            ["content change at", 0, "added", [10, 20], "removed", []],
+            ["content change at", 0, "hiveAdded", [10, 20], "removed", []],
         ]);
 
     });
@@ -61,10 +61,10 @@ function describeRangeChanges(Collection) {
         collection.pop();
         expect(collection.slice()).toEqual([10]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 1, "to add", [], "to remove", [20]],
+            ["before content change at", 1, "to hiveAdd", [], "to remove", [20]],
             ["length change from", 2],
             ["length change to", 1],
-            ["content change at", 1, "added", [], "removed", [20]],
+            ["content change at", 1, "hiveAdded", [], "removed", [20]],
         ]);
     });
 
@@ -74,10 +74,10 @@ function describeRangeChanges(Collection) {
         collection.push(40, 50);
         expect(collection.slice()).toEqual([10, 40, 50]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 1, "to add", [40, 50], "to remove", []],
+            ["before content change at", 1, "to hiveAdd", [40, 50], "to remove", []],
             ["length change from", 1],
             ["length change to", 3],
-            ["content change at", 1, "added", [40, 50], "removed", []],
+            ["content change at", 1, "hiveAdded", [40, 50], "removed", []],
         ]);
     });
 
@@ -87,10 +87,10 @@ function describeRangeChanges(Collection) {
         expect(collection.splice(1, 0, 20, 30)).toEqual([]);
         expect(collection.slice()).toEqual([10, 20, 30, 40, 50]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 1, "to add", [20, 30], "to remove", []],
+            ["before content change at", 1, "to hiveAdd", [20, 30], "to remove", []],
             ["length change from", 3],
             ["length change to", 5],
-            ["content change at", 1, "added", [20, 30], "removed", []],
+            ["content change at", 1, "hiveAdded", [20, 30], "removed", []],
         ]);
     });
 
@@ -100,10 +100,10 @@ function describeRangeChanges(Collection) {
         collection.push(60);
         expect(collection.slice()).toEqual([10, 20, 30, 40, 50, 60]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 5, "to add", [60], "to remove", []],
+            ["before content change at", 5, "to hiveAdd", [60], "to remove", []],
             ["length change from", 5],
             ["length change to", 6],
-            ["content change at", 5, "added", [60], "removed", []],
+            ["content change at", 5, "hiveAdded", [60], "removed", []],
         ]);
     });
 
@@ -114,8 +114,8 @@ function describeRangeChanges(Collection) {
         expect(collection.slice()).toEqual([10, 20, "A", "B", 50, 60]);
         expect(spy.argsForCall).toEqual([
             // no length change
-            ["before content change at", 2, "to add", ["A", "B"], "to remove", [30, 40]],
-            ["content change at", 2, "added", ["A", "B"], "removed", [30, 40]],
+            ["before content change at", 2, "to hiveAdd", ["A", "B"], "to remove", [30, 40]],
+            ["content change at", 2, "hiveAdded", ["A", "B"], "removed", [30, 40]],
         ]);
     });
 
@@ -129,10 +129,10 @@ function describeRangeChanges(Collection) {
         expect(collection.shift()).toEqual(10);
         expect(collection.slice()).toEqual([20, 30]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 0, "to add", [], "to remove", [10]],
+            ["before content change at", 0, "to hiveAdd", [], "to remove", [10]],
             ["length change from", 3],
             ["length change to", 2],
-            ["content change at", 0, "added", [], "removed", [10]],
+            ["content change at", 0, "hiveAdded", [], "removed", [10]],
         ]);
     });
 
@@ -142,10 +142,10 @@ function describeRangeChanges(Collection) {
         expect(collection.splice(2, 0, 40)).toEqual([]);
         expect(collection.slice()).toEqual([20, 30, 40]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 2, "to add", [40], "to remove", []],
+            ["before content change at", 2, "to hiveAdd", [40], "to remove", []],
             ["length change from", 2],
             ["length change to", 3],
-            ["content change at", 2, "added", [40], "removed", []],
+            ["content change at", 2, "hiveAdded", [40], "removed", []],
         ]);
     });
 
@@ -155,8 +155,8 @@ function describeRangeChanges(Collection) {
         expect(collection.splice(0, 1, 10)).toEqual([20]);
         expect(collection.slice()).toEqual([10, 30, 40]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 0, "to add", [10], "to remove", [20]],
-            ["content change at", 0, "added", [10], "removed", [20]],
+            ["before content change at", 0, "to hiveAdd", [10], "to remove", [20]],
+            ["content change at", 0, "hiveAdded", [10], "removed", [20]],
         ]);
     });
 
@@ -169,10 +169,10 @@ function describeRangeChanges(Collection) {
         collection.unshift(30);
         expect(collection.slice()).toEqual([30]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 0, "to add", [30], "to remove", []],
+            ["before content change at", 0, "to hiveAdd", [30], "to remove", []],
             ["length change from", 0],
             ["length change to", 1],
-            ["content change at", 0, "added", [30], "removed", []],
+            ["content change at", 0, "hiveAdded", [30], "removed", []],
         ]);
     });
 
@@ -182,11 +182,11 @@ function describeRangeChanges(Collection) {
         collection.unshift(10, 20);
         expect(collection.slice()).toEqual([10, 20, 30]);
         expect(spy.argsForCall).toEqual([
-            // added and removed values reflect the ending values, not the values at the time of the call
-            ["before content change at", 0, "to add", [10, 20], "to remove", []],
+            // hiveAdded and removed values reflect the ending values, not the values at the time of the call
+            ["before content change at", 0, "to hiveAdd", [10, 20], "to remove", []],
             ["length change from", 1],
             ["length change to", 3],
-            ["content change at", 0, "added", [10, 20], "removed", []],
+            ["content change at", 0, "hiveAdded", [10, 20], "removed", []],
         ]);
     });
 
@@ -196,8 +196,8 @@ function describeRangeChanges(Collection) {
         collection.reverse();
         expect(collection.slice()).toEqual([30, 20, 10]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 0, "to add", [30, 20, 10], "to remove", [10, 20, 30]],
-            ["content change at", 0, "added", [30, 20, 10], "removed", [10, 20, 30]],
+            ["before content change at", 0, "to hiveAdd", [30, 20, 10], "to remove", [10, 20, 30]],
+            ["content change at", 0, "hiveAdded", [30, 20, 10], "removed", [10, 20, 30]],
         ]);
     });
 
@@ -207,9 +207,9 @@ function describeRangeChanges(Collection) {
         collection.sort();
         expect(collection.slice()).toEqual([10, 20, 30]);
         expect(spy.argsForCall).toEqual([
-            // added and removed values reflect the ending values, not the values at the time of the call
-            ["before content change at", 0, "to add", [10, 20, 30], "to remove", [30, 20, 10]],
-            ["content change at", 0, "added", [10, 20, 30], "removed", [30, 20, 10]],
+            // hiveAdded and removed values reflect the ending values, not the values at the time of the call
+            ["before content change at", 0, "to hiveAdd", [10, 20, 30], "to remove", [30, 20, 10]],
+            ["content change at", 0, "hiveAdded", [10, 20, 30], "removed", [30, 20, 10]],
         ]);
     });
 
@@ -220,10 +220,10 @@ function describeRangeChanges(Collection) {
         expect(collection.delete(20)).toBe(true);
         expect(collection.slice()).toEqual([10, 30]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 1, "to add", [], "to remove", [20]],
+            ["before content change at", 1, "to hiveAdd", [], "to remove", [20]],
             ["length change from", 3],
             ["length change to", 2],
-            ["content change at", 1, "added", [], "removed", [20]],
+            ["content change at", 1, "hiveAdded", [], "removed", [20]],
         ]);
     });
 
@@ -233,10 +233,10 @@ function describeRangeChanges(Collection) {
         collection.clear();
         expect(collection.slice()).toEqual([]);
         expect(spy.argsForCall).toEqual([
-            ["before content change at", 0, "to add", [], "to remove", [10, 30]],
+            ["before content change at", 0, "to hiveAdd", [], "to remove", [10, 30]],
             ["length change from", 2],
             ["length change to", 0],
-            ["content change at", 0, "added", [], "removed", [10, 30]],
+            ["content change at", 0, "hiveAdded", [], "removed", [10, 30]],
         ]);
     });
 
@@ -273,14 +273,14 @@ function describeRangeChanges(Collection) {
     it("handles cyclic content change listeners", function () {
         var foo = Collection([]);
         var bar = Collection([]);
-        foo.addRangeChangeListener(function (plus, minus, index) {
+        foo.hiveAddRangeChangeListener(function (plus, minus, index) {
             // if this is a change in response to a change in bar,
             // do not send back
             if (bar.getRangeChangeDescriptor().isActive)
                 return;
             bar.splice.apply(bar, [index, minus.length].concat(plus));
         });
-        bar.addRangeChangeListener(function (plus, minus, index) {
+        bar.hiveAddRangeChangeListener(function (plus, minus, index) {
             if (foo.getRangeChangeDescriptor().isActive)
                 return;
             foo.splice.apply(foo, [index, minus.length].concat(plus));
@@ -294,7 +294,7 @@ function describeRangeChanges(Collection) {
     it("observes length changes on collections that are not otherwised observed", function () {
         var collection = new Collection([1, 2, 3]);
         var spy = jasmine.createSpy();
-        collection.addOwnPropertyChangeListener("length", spy);
+        collection.hiveAddOwnPropertyChangeListener("length", spy);
         collection.push(4);
         expect(spy).toHaveBeenCalled();
     });

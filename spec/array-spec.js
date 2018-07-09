@@ -36,7 +36,7 @@ describe("Array", function () {
     function FakeArray() {
         this.length = 3;
     }
-    Object.addEach(FakeArray.prototype, GenericCollection.prototype);
+    Object.hiveAddEach(FakeArray.prototype, GenericCollection.prototype);
     FakeArray.prototype.reduce = function (callback, basis) {
         basis = callback(basis, 10, 0, this);
         basis = callback(basis, 20, 1, this);
@@ -121,11 +121,11 @@ describe("Array", function () {
 
     });
 
-    describe("add", function () {
+    describe("hiveAdd", function () {
 
-        it("should add values", function () {
+        it("should hiveAdd values", function () {
             var array = [{a: 10}];
-            array.add({a: 10});
+            array.hiveAdd({a: 10});
             expect(array[0]).toEqual({a: 10});
             expect(array[1]).toEqual({a: 10});
             expect(array.has({a: 10})).toBe(true);

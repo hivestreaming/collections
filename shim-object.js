@@ -191,7 +191,7 @@ Object.set = function (object, key, value) {
     }
 };
 
-Object.addEach = function (target, source) {
+Object.hiveAddEach = function (target, source) {
     if (!source) {
     } else if (typeof source.forEach === "function" && !source.hasOwnProperty("forEach")) {
         // copy map-alikes
@@ -277,7 +277,7 @@ Object.values = function (object) {
 Object.concat = function () {
     var object = {};
     for (var i = 0; i < arguments.length; i++) {
-        Object.addEach(object, arguments[i]);
+        Object.hiveAddEach(object, arguments[i]);
     }
     return object;
 };

@@ -69,7 +69,7 @@ Object.defineProperty(Iterator.prototype,"_iterationObject", {
 // reducible
 Iterator.prototype.constructClone = function (values) {
     var clone = [];
-    clone.addEach(values);
+    clone.hiveAddEach(values);
     return clone;
 };
 

@@ -25,7 +25,7 @@ if (Object.freeze) {
 
 Array.from = Array.from || function (values) {
     var array = [];
-    array.addEach(values);
+    array.hiveAddEach(values);
     return array;
 };
 
@@ -62,7 +62,7 @@ function define(key, value) {
         });
 }
 
-define("addEach", GenericCollection.prototype.addEach);
+define("hiveAddEach", GenericCollection.prototype.hiveAddEach);
 define("deleteEach", GenericCollection.prototype.deleteEach);
 define("toArray", GenericCollection.prototype.toArray);
 define("toObject", GenericCollection.prototype.toObject);
@@ -82,7 +82,7 @@ define("reversed", GenericCollection.prototype.reversed);
 
 define("constructClone", function (values) {
     var clone = new this.constructor();
-    clone.addEach(values);
+    clone.hiveAddEach(values);
     return clone;
 });
 
@@ -95,7 +95,7 @@ define("set", function (index, value) {
     return true;
 });
 
-define("add", function (value) {
+define("hiveAdd", function (value) {
     this.push(value);
     return true;
 });

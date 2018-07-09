@@ -11,7 +11,7 @@ function MapChanges() {
 var object_owns = Object.prototype.hasOwnProperty;
 
 /*
-    Object map change descriptors carry information necessary for adding,
+    Object map change descriptors carry information necessary for hiveAdding,
     removing, dispatching, and shorting events to listeners for map changes
     for a particular key on a particular object.  These descriptors are used
     here for shallow map changes.
@@ -47,7 +47,7 @@ MapChanges.prototype.getMapChangeDescriptor = function (token) {
     return tokenChangeDescriptors.get(token);
 };
 
-MapChanges.prototype.addMapChangeListener = function (listener, token, beforeChange) {
+MapChanges.prototype.hiveAddMapChangeListener = function (listener, token, beforeChange) {
     if (!this.isObservable && this.makeObservable) {
         // for Array
         this.makeObservable();
@@ -136,8 +136,8 @@ MapChanges.prototype.dispatchMapChange = function (key, value, beforeChange) {
     }, this);
 };
 
-MapChanges.prototype.addBeforeMapChangeListener = function (listener, token) {
-    return this.addMapChangeListener(listener, token, true);
+MapChanges.prototype.hiveAddBeforeMapChangeListener = function (listener, token) {
+    return this.hiveAddMapChangeListener(listener, token, true);
 };
 
 MapChanges.prototype.removeBeforeMapChangeListener = function (listener, token) {

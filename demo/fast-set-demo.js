@@ -6,8 +6,8 @@ console.log("\nignore non-unique values");
 var set = new Set([1, 1, 1, 2, 2, 2, 1, 2]);
 console.log(set.toArray());
 
-console.log("\nadd");
-set.add(3);
+console.log("\nhiveAdd");
+set.hiveAdd(3);
 console.log(set.toArray());
 
 console.log("\ndelete");
@@ -39,10 +39,10 @@ Item.prototype.hash = function () {
 };
 
 var set = new Set();
-set.add(new Item(1, 'a'));
-set.add(new Item(3, 'b'));
-set.add(new Item(2, 'c'));
-set.add(new Item(2, 'd'));
+set.hiveAdd(new Item(1, 'a'));
+set.hiveAdd(new Item(3, 'b'));
+set.hiveAdd(new Item(2, 'c'));
+set.hiveAdd(new Item(2, 'd'));
 console.log(Object.keys(set.buckets));
 set.log();
 

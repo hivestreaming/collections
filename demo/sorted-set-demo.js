@@ -2,12 +2,12 @@
 var SortedSet = require("../sorted-set");
 
 var set = new SortedSet();
-set.add(1);
-set.add(2);
-set.add(3);
-set.add(-3);
-set.add(-1);
-set.add(-2);
+set.hiveAdd(1);
+set.hiveAdd(2);
+set.hiveAdd(3);
+set.hiveAdd(-3);
+set.hiveAdd(-1);
+set.hiveAdd(-2);
 set.log();
 
 set.toArray().sort(function () {
@@ -18,11 +18,11 @@ set.toArray().sort(function () {
     set.log();
 });
 
-console.log("add", 0);
-set.add(0);
+console.log("hiveAdd", 0);
+set.hiveAdd(0);
 set.log();
-console.log("add another", 0);
-set.add(0);
+console.log("hiveAdd another", 0);
+set.hiveAdd(0);
 set.log();
 console.log("delete", 0);
 set.delete(0);

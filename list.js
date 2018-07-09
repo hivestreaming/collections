@@ -18,15 +18,15 @@ function List(values, equals, getDefault) {
     this.contentEquals = equals || Object.equals;
     this.getDefault = getDefault || Function.noop;
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 List.List = List; // hack so require("list").List will work in MontageJS
 
-Object.addEach(List.prototype, GenericCollection.prototype);
-Object.addEach(List.prototype, GenericOrder.prototype);
-Object.addEach(List.prototype, PropertyChanges.prototype);
-Object.addEach(List.prototype, RangeChanges.prototype);
+Object.hiveAddEach(List.prototype, GenericCollection.prototype);
+Object.hiveAddEach(List.prototype, GenericOrder.prototype);
+Object.hiveAddEach(List.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(List.prototype, RangeChanges.prototype);
 
 List.prototype.constructClone = function (values) {
     return new this.constructor(values, this.contentEquals, this.getDefault);
@@ -68,7 +68,7 @@ List.prototype.get = function (value, equals) {
     return this.getDefault(value);
 };
 
-// LIFO (delete removes the most recently added equivalent value)
+// LIFO (delete removes the most recently hiveAdded equivalent value)
 List.prototype["delete"] = function (value, equals) {
     var found = this.findLast(value, equals);
     if (found) {
@@ -118,13 +118,13 @@ List.prototype.clear = function () {
     }
 };
 
-List.prototype.add = function (value) {
+List.prototype.hiveAdd = function (value) {
     var node = new this.Node(value)
     if (this.dispatchesRangeChanges) {
         node.index = this.length;
         this.dispatchBeforeRangeChange([value], [], node.index);
     }
-    this.head.addBefore(node);
+    this.head.hiveAddBefore(node);
     this.length++;
     if (this.dispatchesRangeChanges) {
         this.dispatchRangeChange([value], [], node.index);
@@ -144,7 +144,7 @@ List.prototype.push = function () {
     for (var i = 0; i < arguments.length; i++) {
         var value = arguments[i];
         var node = new this.Node(value);
-        head.addBefore(node);
+        head.hiveAddBefore(node);
     }
     this.length += arguments.length;
     if (this.dispatchesRangeChanges) {
@@ -163,7 +163,7 @@ List.prototype.unshift = function () {
     for (var i = 0; i < arguments.length; i++) {
         var value = arguments[i];
         var node = new this.Node(value);
-        at.addAfter(node);
+        at.hiveAddAfter(node);
         at = node;
     }
     this.length += arguments.length;
@@ -326,13 +326,13 @@ List.prototype.swap = function (start, length, plus) {
     for (var i = 0, at = start; i < minus.length; i++, at = at.next) {
         at["delete"]();
     }
-    // add plus
+    // hiveAdd plus
     if (initial == null && at === this.head) {
         at = this.head.next;
     }
     for (var i = 0; i < plus.length; i++) {
         var node = new this.Node(plus[i]);
-        at.addBefore(node);
+        at.hiveAddBefore(node);
     }
     // adjust length
     this.length += plus.length - minus.length;
@@ -451,7 +451,7 @@ Node.prototype["delete"] = function () {
     this.next.prev = this.prev;
 };
 
-Node.prototype.addBefore = function (node) {
+Node.prototype.hiveAddBefore = function (node) {
     var prev = this.prev;
     this.prev = node;
     node.prev = prev;
@@ -459,7 +459,7 @@ Node.prototype.addBefore = function (node) {
     node.next = this;
 };
 
-Node.prototype.addAfter = function (node) {
+Node.prototype.hiveAddAfter = function (node) {
     var next = this.next;
     this.next = node;
     node.next = next;

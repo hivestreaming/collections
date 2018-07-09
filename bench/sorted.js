@@ -19,7 +19,7 @@ var size = 10000;
     function bench(Sorted) {
         var set = Sorted();
         for (var i = 0; i < size; i++) {
-            set.add(numbers[i]);
+            set.hiveAdd(numbers[i]);
         }
         for (var i = 0; i < size; i++) {
             set.delete(numbers[i]);

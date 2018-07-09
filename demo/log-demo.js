@@ -2,13 +2,13 @@
 var SortedSet = require("../sorted-set");
 
 var tree = new SortedSet();
-tree.add(1);
-tree.add(3);
-tree.add(0);
-tree.add(-3);
-tree.add(2);
-tree.add(-1);
-tree.add(-2);
+tree.hiveAdd(1);
+tree.hiveAdd(3);
+tree.hiveAdd(0);
+tree.hiveAdd(-3);
+tree.hiveAdd(2);
+tree.hiveAdd(-1);
+tree.hiveAdd(-2);
 tree.get(0);
 
 console.log("ASCII");

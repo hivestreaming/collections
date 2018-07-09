@@ -268,26 +268,26 @@ var observableArrayProperties = {
     push: {
         value: function push(arg) {
             var start = this.length,
-                addedCount = arguments.length,
+                hiveAddedCount = arguments.length,
                 argArray,
                 hasOwnPropertyChangeDescriptor;
 
-            argArray = addedCount === 1 ? [arguments[0]] : Array.apply(null, arguments);
+            argArray = hiveAddedCount === 1 ? [arguments[0]] : Array.apply(null, arguments);
 
-            if(addedCount > 0) {
+            if(hiveAddedCount > 0) {
                 PropertyChanges.dispatchBeforeOwnPropertyChange(this, "length", start);
                 this.dispatchBeforeRangeChange(argArray, Array.empty, start);
 
                 if(hasOwnPropertyChangeDescriptor = PropertyChanges.hasOwnPropertyChangeDescriptor(this)) {
-                    this._dispatchBeforeOwnPropertyChange(start, addedCount);
+                    this._dispatchBeforeOwnPropertyChange(start, hiveAddedCount);
                 }
             }
 
             array_push.apply(this,arguments);
 
-            if (addedCount > 0) {
+            if (hiveAddedCount > 0) {
                 if (hasOwnPropertyChangeDescriptor) {
-                    this._dispatchOwnPropertyChange(start,addedCount);
+                    this._dispatchOwnPropertyChange(start,hiveAddedCount);
                 }
                 this.dispatchRangeChange(argArray,Array.empty, start);
                 this.dispatchOwnPropertyChange("length", this.length);

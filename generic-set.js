@@ -8,7 +8,7 @@ GenericSet.prototype.isSet = true;
 
 GenericSet.prototype.union = function (that) {
     var union =  this.constructClone(this);
-    union.addEach(that);
+    union.hiveAddEach(that);
     return union;
 };
 
@@ -66,7 +66,7 @@ GenericSet.prototype.toggle = function (value) {
     if (this.has(value)) {
         this["delete"](value);
     } else {
-        this.add(value);
+        this.hiveAdd(value);
     }
 };
 

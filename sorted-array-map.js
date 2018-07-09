@@ -28,15 +28,15 @@ function SortedArrayMap(values, equals, compare, getDefault) {
         }
     );
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 // hack so require("sorted-array-map").SortedArrayMap will work in MontageJS
 SortedArrayMap.SortedArrayMap = SortedArrayMap;
 
-Object.addEach(SortedArrayMap.prototype, GenericCollection.prototype);
-Object.addEach(SortedArrayMap.prototype, GenericMap.prototype);
-Object.addEach(SortedArrayMap.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(SortedArrayMap.prototype, GenericCollection.prototype);
+Object.hiveAddEach(SortedArrayMap.prototype, GenericMap.prototype);
+Object.hiveAddEach(SortedArrayMap.prototype, PropertyChanges.prototype);
 
 SortedArrayMap.prototype.isSorted = true;
 

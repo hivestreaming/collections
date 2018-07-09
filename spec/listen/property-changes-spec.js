@@ -13,10 +13,10 @@ describe("PropertyChanges", function () {
     it("observes setter on object", function () {
         spy = jasmine.createSpy();
         var object = {};
-        PropertyChanges.addBeforeOwnPropertyChangeListener(object, 'x', function (value, key) {
+        PropertyChanges.hiveAddBeforeOwnPropertyChangeListener(object, 'x', function (value, key) {
             spy('from', value, key);
         });
-        PropertyChanges.addOwnPropertyChangeListener(object, 'x', function (value, key) {
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, 'x', function (value, key) {
             spy('to', value, key);
         });
         object.x = 10;
@@ -46,10 +46,10 @@ describe("PropertyChanges", function () {
                 configurable: true
             }
         });
-        PropertyChanges.addBeforeOwnPropertyChangeListener(object, 'x', function (value, key) {
+        PropertyChanges.hiveAddBeforeOwnPropertyChangeListener(object, 'x', function (value, key) {
             spy('from', value, key);
         });
-        PropertyChanges.addOwnPropertyChangeListener(object, 'x', function (value, key) {
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, 'x', function (value, key) {
             spy('to', value, key);
         });
         object.x = 20;
@@ -75,10 +75,10 @@ describe("PropertyChanges", function () {
                 configurable: true
             }
         });
-        PropertyChanges.addBeforeOwnPropertyChangeListener(object, 'x', function (value, key) {
+        PropertyChanges.hiveAddBeforeOwnPropertyChangeListener(object, 'x', function (value, key) {
             spy('from', value, key);
         });
-        PropertyChanges.addOwnPropertyChangeListener(object, 'x', function (value, key) {
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, 'x', function (value, key) {
             spy('to', value, key);
         });
         object.x = 10;
@@ -101,7 +101,7 @@ describe("PropertyChanges", function () {
             }
         });
 
-        PropertyChanges.addOwnPropertyChangeListener(object, "x", function() {});
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "x", function() {});
 
         object.x = 1;
         object.x = 2;
@@ -112,10 +112,10 @@ describe("PropertyChanges", function () {
     it("handles cyclic own property change listeners", function () {
         var a = {};
         var b = {};
-        PropertyChanges.addOwnPropertyChangeListener(a, 'foo', function (value) {
+        PropertyChanges.hiveAddOwnPropertyChangeListener(a, 'foo', function (value) {
             b.bar = value;
         });
-        PropertyChanges.addOwnPropertyChangeListener(b, 'bar', function (value) {
+        PropertyChanges.hiveAddOwnPropertyChangeListener(b, 'bar', function (value) {
             a.foo = value;
         });
         a.foo = 10;
@@ -130,7 +130,7 @@ describe("PropertyChanges", function () {
             }
         };
         spyOn(object, "handlePropertyChange").andCallThrough();
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", object);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", object);
         object.foo = 10;
         expect(object.handlePropertyChange).toHaveBeenCalled();
     });
@@ -142,7 +142,7 @@ describe("PropertyChanges", function () {
             }
         };
         spyOn(object, "handleFooChange").andCallThrough();
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", object);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", object);
         object.foo = 10;
         expect(object.handleFooChange).toHaveBeenCalled();
     });
@@ -158,8 +158,8 @@ describe("PropertyChanges", function () {
         };
         var listener2 = jasmine.createSpyObj("listener2", ["handleFooChange"]);
 
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener1);
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener2);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener1);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener2);
 
         object.foo = false;
         expect(listener2.handleFooChange).toHaveBeenCalled();
@@ -179,10 +179,10 @@ describe("PropertyChanges", function () {
         var listener2 = jasmine.createSpyObj("listener2", ["handleFooChange"]);
         var listener4 = jasmine.createSpyObj("listener4", ["handleFooChange"]);
 
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener1);
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener2);
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener3);
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener4);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener1);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener2);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener3);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener4);
 
         object.foo = false;
         expect(listener1.handleFooChange).toHaveBeenCalled();
@@ -202,28 +202,28 @@ describe("PropertyChanges", function () {
         };
         var listener2 = jasmine.createSpyObj("listener2", ["handleFooChange"]);
 
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener1);
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener2);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener1);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener2);
 
         object.foo = false;
         expect(listener2.handleFooChange).not.toHaveBeenCalled();
     });
 
-    it("doesn't call new handlers if listeners are added during dispatch", function () {
+    it("doesn't call new handlers if listeners are hiveAdded during dispatch", function () {
         var object = {
             foo: true
         };
         var listener1 = {
             handleFooChange: function (value, key, object) {
                 PropertyChanges.removeOwnPropertyChangeListener(object, key, listener1);
-                PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener3);
+                PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener3);
             }
         };
         var listener2 = jasmine.createSpyObj("listener2", ["handleFooChange"]);
         var listener3 = jasmine.createSpyObj("listener3", ["handleFooChange"]);
 
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener1);
-        PropertyChanges.addOwnPropertyChangeListener(object, "foo", listener2);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener1);
+        PropertyChanges.hiveAddOwnPropertyChangeListener(object, "foo", listener2);
 
         object.foo = false;
         expect(listener2.handleFooChange).toHaveBeenCalled();

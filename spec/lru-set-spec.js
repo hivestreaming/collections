@@ -6,7 +6,7 @@ var describeToJson = require("./to-json");
 
 describe("LruSet", function () {
 
-    // construction, has, add, get, delete
+    // construction, has, hiveAdd, get, delete
     function newLruSet(values) {
         return new LruSet(values);
     }
@@ -22,34 +22,34 @@ describe("LruSet", function () {
     it("should remove stale entries", function () {
         var set = LruSet([4, 3, 1, 2, 3], 3);
         expect(set.length).toBe(3);
-        set.add(3);
+        set.hiveAdd(3);
         expect(set.toArray()).toEqual([1, 2, 3]);
-        set.add(4);
+        set.hiveAdd(4);
         expect(set.toArray()).toEqual([2, 3, 4]);
     });
 
     it("should emit LRU changes as singleton operation", function () {
         var a = 1, b = 2, c = 3, d = 4;
         var lruset = LruSet([d, c, a, b, c], 3);
-        lruset.addRangeChangeListener(function(plus, minus) {
+        lruset.hiveAddRangeChangeListener(function(plus, minus) {
             expect(plus).toEqual([d]);
             expect(minus).toEqual([a]);
         });
-        expect(lruset.add(d)).toBe(false);
+        expect(lruset.hiveAdd(d)).toBe(false);
     });
 
     it("should dispatch LRU changes as singleton operation", function () {
         var set = LruSet([4, 3, 1, 2, 3], 3);
         var spy = jasmine.createSpy();
-        set.addBeforeRangeChangeListener(function (plus, minus) {
+        set.hiveAddBeforeRangeChangeListener(function (plus, minus) {
             spy('before-plus', plus);
             spy('before-minus', minus);
         });
-        set.addRangeChangeListener(function (plus, minus) {
+        set.hiveAddRangeChangeListener(function (plus, minus) {
             spy('after-plus', plus);
             spy('after-minus', minus);
         });
-        expect(set.add(4)).toBe(false);
+        expect(set.hiveAdd(4)).toBe(false);
         expect(spy.argsForCall).toEqual([
             ['before-plus', [4]],
             ['before-minus', [1]],

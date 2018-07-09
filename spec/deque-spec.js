@@ -62,7 +62,7 @@ describe("Deque", function () {
             spy(plus, minus, value); // ignore last arg
         };
         var deque = Deque();
-        deque.addRangeChangeListener(handler);
+        deque.hiveAddRangeChangeListener(handler);
         deque.push(1);
         deque.push(2, 3);
         deque.pop();

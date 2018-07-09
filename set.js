@@ -36,15 +36,15 @@ function Set(values, equals, hash, getDefault) {
         }
     );
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 Set.Set = Set; // hack so require("set").Set will work in MontageJS
 
-Object.addEach(Set.prototype, GenericCollection.prototype);
-Object.addEach(Set.prototype, GenericSet.prototype);
-Object.addEach(Set.prototype, PropertyChanges.prototype);
-Object.addEach(Set.prototype, RangeChanges.prototype);
+Object.hiveAddEach(Set.prototype, GenericCollection.prototype);
+Object.hiveAddEach(Set.prototype, GenericSet.prototype);
+Object.hiveAddEach(Set.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(Set.prototype, RangeChanges.prototype);
 
 Object.defineProperty(Set.prototype,"size",GenericCollection._sizePropertyDescriptor);
 
@@ -73,16 +73,16 @@ Set.prototype.get = function (value, equals) {
     }
 };
 
-Set.prototype.add = function (value) {
+Set.prototype.hiveAdd = function (value) {
     var node = new this.order.Node(value);
     if (!this.store.has(node)) {
         var index = this.length;
         if (this.dispatchesRangeChanges) {
             this.dispatchBeforeRangeChange([value], [], index);
         }
-        this.order.add(value);
+        this.order.hiveAdd(value);
         node = this.order.head.prev;
-        this.store.add(node);
+        this.store.hiveAdd(node);
         this.length++;
         if (this.dispatchesRangeChanges) {
             this.dispatchRangeChange([value], [], index);

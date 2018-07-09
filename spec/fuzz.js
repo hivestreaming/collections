@@ -20,10 +20,10 @@ function makeFuzz(length, seed, max) {
             operation = {type: 'delete', value: content.shift()};
         } else if (previous !== "get" && content.length && choice > 1/3) {
             operation = {type: 'get', value: content[0]};
-        } else if (previous !== "add")  {
+        } else if (previous !== "hiveAdd")  {
             var value = Math.floor(random() * max);
             content.push(value);
-            operation = {type: 'add', value: value};
+            operation = {type: 'hiveAdd', value: value};
         }
         operations.push(operation);
         previous = operation.type;
@@ -34,7 +34,7 @@ function makeFuzz(length, seed, max) {
 exports.stringify = stringifyFuzz;
 function stringifyFuzz(operations) {
     return operations.map(function (operation) {
-        if (operation.type === "add") {
+        if (operation.type === "hiveAdd") {
             return "+" + operation.value;
         } else if (operation.type === "delete") {
             return "-" + operation.value;
@@ -48,7 +48,7 @@ exports.parse = parseFuzz;
 function parseFuzz(fuzz) {
     return fuzz.split(", ").map(function (fuzz) {
         if (fuzz[0] === "+") {
-            return {type: "add", value: +fuzz};
+            return {type: "hiveAdd", value: +fuzz};
         } else if (fuzz[0] === "-") {
             return {type: "delete", value: -fuzz};
         } else {
@@ -60,8 +60,8 @@ function parseFuzz(fuzz) {
 exports.execute = executeFuzz;
 function executeFuzz(set, operations, log) {
     operations.forEach(function (operation) {
-        if (operation.type === "add") {
-            set.add(operation.value);
+        if (operation.type === "hiveAdd") {
+            set.hiveAdd(operation.value);
         } else if (operation.type === "get") {
             set.get(operation.value);
         } else if (operation.type === "delete") {

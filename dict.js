@@ -16,14 +16,14 @@ function Dict(values, getDefault) {
     this.getDefault = getDefault;
     this.store = Object.create(null);
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 Dict.Dict = Dict; // hack so require("dict").Dict will work in MontageJS.
 
-Object.addEach(Dict.prototype, GenericCollection.prototype);
-Object.addEach(Dict.prototype, GenericMap.prototype);
-Object.addEach(Dict.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(Dict.prototype, GenericCollection.prototype);
+Object.hiveAddEach(Dict.prototype, GenericMap.prototype);
+Object.hiveAddEach(Dict.prototype, PropertyChanges.prototype);
 
 Dict.prototype.constructClone = function (values) {
     return new this.constructor(values, this.getDefault);
@@ -75,16 +75,16 @@ Dict.prototype.get = function (key, defaultValue) {
 Dict.prototype.set = function (key, value) {
     this.assertString(key);
     var isProtoKey = (key === "__proto__");
-    
+
     if (isProtoKey ? this._hasProto : key in this.store) { // update
         if (this.dispatchesMapChanges) {
             this.dispatchBeforeMapChange(key, isProtoKey ? this._protoValue : this.store[key]);
         }
-        
+
         isProtoKey
             ? this._protoValue = value
             : this.store[key] = value;
-        
+
         if (this.dispatchesMapChanges) {
             this.dispatchMapChange(key, value);
         }
@@ -183,7 +183,7 @@ Dict.prototype.reduceRight = function (callback, basis, thisp) {
     basis = Object.keys(this.store).reduceRight(function (basis, key) {
         return callback.call(thisp, basis, store[key], key, self);
     }, basis);
-    
+
     if(this._hasProto) {
         return callback.call(thisp, basis, this._protoValue, "__proto__", self);
     }

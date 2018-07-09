@@ -6,9 +6,9 @@ var prng = require("./prng");
 exports.fuzzDeque = fuzzDeque;
 function fuzzDeque(Deque) {
     for (var biasWeight = .3; biasWeight < .8; biasWeight += .2) {
-        for (var maxAddLength = 1; maxAddLength < 5; maxAddLength += 3) {
+        for (var maxhiveAddLength = 1; maxhiveAddLength < 5; maxhiveAddLength += 3) {
             for (var seed = 0; seed < 10; seed++) {
-                var plan = makePlan(100, seed, biasWeight, maxAddLength);
+                var plan = makePlan(100, seed, biasWeight, maxhiveAddLength);
                 execute(Deque, plan.ops);
             }
         }
@@ -16,19 +16,19 @@ function fuzzDeque(Deque) {
 }
 
 exports.makePlan = makePlan;
-function makePlan(length, seed, biasWeight, maxAddLength) {
-    maxAddLength = maxAddLength || 1;
+function makePlan(length, seed, biasWeight, maxhiveAddLength) {
+    maxhiveAddLength = maxhiveAddLength || 1;
     var random = prng(seed);
     var ops = [];
     while (ops.length < length) {
         var bias = ops.length / length;
         var choice1 = random() * (1 - biasWeight) + bias * biasWeight;
         var choice2 = random();
-        if (choice1 < 1 / (maxAddLength + 1)) {
+        if (choice1 < 1 / (maxhiveAddLength + 1)) {
             if (choice2 < .5) {
-                ops.push(["push", makeRandomArray(1 + ~~(random() * maxAddLength - .5))]);
+                ops.push(["push", makeRandomArray(1 + ~~(random() * maxhiveAddLength - .5))]);
             } else {
-                ops.push(["unshift", makeRandomArray(1 + ~~(random() * maxAddLength - .5))]);
+                ops.push(["unshift", makeRandomArray(1 + ~~(random() * maxhiveAddLength - .5))]);
             }
         } else {
             if (choice2 < .5) {
@@ -42,7 +42,7 @@ function makePlan(length, seed, biasWeight, maxAddLength) {
         seed: seed,
         length: length,
         biasWeight: biasWeight,
-        maxAddLength: maxAddLength,
+        maxhiveAddLength: maxhiveAddLength,
         ops: ops
     }
 }

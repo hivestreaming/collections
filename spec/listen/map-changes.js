@@ -2,13 +2,13 @@
 module.exports = describeMapChanges;
 function describeMapChanges(Map) {
 
-    it("should dispatch addition", function () {
+    it("should dispatch hiveAddition", function () {
         var map = Map();
         var spy = jasmine.createSpy();
-        map.addBeforeMapChangeListener(function (value, key) {
+        map.hiveAddBeforeMapChangeListener(function (value, key) {
             spy('before', key, value);
         });
-        map.addMapChangeListener(function (value, key) {
+        map.hiveAddMapChangeListener(function (value, key) {
             spy('after', key, value);
         });
         map.set(0, 10);
@@ -21,10 +21,10 @@ function describeMapChanges(Map) {
     it("should dispatch alteration", function () {
         var map = Map([[0, 10]]);
         var spy = jasmine.createSpy();
-        map.addBeforeMapChangeListener(function (value, key) {
+        map.hiveAddBeforeMapChangeListener(function (value, key) {
             spy('before', key, value);
         });
-        map.addMapChangeListener(function (value, key) {
+        map.hiveAddMapChangeListener(function (value, key) {
             spy('after', key, value);
         });
         map.set(0, 20);
@@ -41,10 +41,10 @@ function describeMapChanges(Map) {
             return;
         }
         var spy = jasmine.createSpy();
-        map.addBeforeMapChangeListener(function (value, key) {
+        map.hiveAddBeforeMapChangeListener(function (value, key) {
             spy('before', key, value);
         });
-        map.addMapChangeListener(function (value, key) {
+        map.hiveAddMapChangeListener(function (value, key) {
             spy('after', key, value);
         });
         map.delete(0);

@@ -21,12 +21,12 @@ function Deque(values, capacity) {
     this.init();
     this.length = 0;
     this.front = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
-Object.addEach(Deque.prototype, GenericCollection.prototype);
-Object.addEach(Deque.prototype, GenericOrder.prototype);
-Object.addEach(Deque.prototype, RangeChanges.prototype);
+Object.hiveAddEach(Deque.prototype, GenericCollection.prototype);
+Object.hiveAddEach(Deque.prototype, GenericOrder.prototype);
+Object.hiveAddEach(Deque.prototype, RangeChanges.prototype);
 
 Deque.prototype.maxCapacity = (1 << 30) | 0;
 Deque.prototype.minCapacity = 16;
@@ -35,7 +35,7 @@ Deque.prototype.constructClone = function (values) {
     return new this.constructor(values, this.capacity)
 };
 
-Deque.prototype.add = function (value) {
+Deque.prototype.hiveAdd = function (value) {
     this.push(value);
 };
 

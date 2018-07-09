@@ -7,25 +7,25 @@ function GenericCollection() {
 
 GenericCollection.EmptyArray = Object.freeze([]);
 
-GenericCollection.prototype.addEach = function (values) {
+GenericCollection.prototype.hiveAddEach = function (values) {
     if (values && Object(values) === values) {
         if (typeof values.forEach === "function") {
-            values.forEach(this.add, this);
+            values.forEach(this.hiveAdd, this);
         } else if (typeof values.length === "number") {
             // Array-like objects that do not implement forEach, ergo,
             // Arguments
             for (var i = 0; i < values.length; i++) {
-                this.add(values[i], i);
+                this.hiveAdd(values[i], i);
             }
         } else {
             Object.keys(values).forEach(function (key) {
-                this.add(values[key], key);
+                this.hiveAdd(values[key], key);
             }, this);
         }
     } else if (values && typeof values.length === "number") {
         // Strings
         for (var i = 0; i < values.length; i++) {
-            this.add(values[i], i);
+            this.hiveAdd(values[i], i);
         }
     }
     return this;
@@ -111,7 +111,7 @@ GenericCollection.prototype.filter = function (callback /*, thisp*/) {
     var result = this.constructClone();
     this.reduce(function (undefined, value, key, object, depth) {
         if (callback.call(thisp, value, key, object, depth)) {
-            result.add(value, key);
+            result.hiveAdd(value, key);
         }
     }, undefined);
     return result;
@@ -185,7 +185,7 @@ GenericCollection.prototype.average = function (zero) {
 GenericCollection.prototype.concat = function () {
     var result = this.constructClone(this);
     for (var i = 0; i < arguments.length; i++) {
-        result.addEach(arguments[i]);
+        result.hiveAddEach(arguments[i]);
     }
     return result;
 };
@@ -254,7 +254,7 @@ GenericCollection.prototype.clone = function (depth, memo) {
     }
     var clone = this.constructClone();
     this.forEach(function (value, key) {
-        clone.add(Object.clone(value, depth - 1, memo), key);
+        clone.hiveAdd(Object.clone(value, depth - 1, memo), key);
     }, this);
     return clone;
 };

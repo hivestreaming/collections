@@ -18,7 +18,7 @@ describe("LruMap", function () {
         expect(map.length).toBe(3);
     });
 
-    it("should not grow when re-adding", function () {
+    it("should not grow when re-hiveAdding", function () {
         var map = LruMap({a: 10, b: 20, c: 30}, 3);
 
         expect(map.keys()).toEqual(['a', 'b', 'c']);
@@ -33,7 +33,7 @@ describe("LruMap", function () {
         expect(map.length).toBe(3);
     });
 
-    it("should grow when adding new values", function () {
+    it("should grow when hiveAdding new values", function () {
         var map = LruMap({}, 3);
         expect(map.length).toBe(0);
 
@@ -65,15 +65,15 @@ describe("LruMap", function () {
     it("should dispatch deletion for stale entries", function () {
         var map = LruMap({a: 10, b: 20, c: 30}, 3);
         var spy = jasmine.createSpy();
-        map.addBeforeMapChangeListener(function (value, key) {
+        map.hiveAddBeforeMapChangeListener(function (value, key) {
             spy('before', key, value);
         });
-        map.addMapChangeListener(function (value, key) {
+        map.hiveAddMapChangeListener(function (value, key) {
             spy('after', key, value);
         });
         map.set('d', 40);
         expect(spy.argsForCall).toEqual([
-            ['before', 'd', undefined], // d will be added
+            ['before', 'd', undefined], // d will be hiveAdded
             ['before', 'a', undefined], // then a is pruned (stale)
             ['after', 'a', undefined],  // afterwards a is still pruned
             ['after', 'd', 40]          // and now d has a value

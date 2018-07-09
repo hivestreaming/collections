@@ -29,14 +29,14 @@ function LruMap(values, maxLength, equals, hash, getDefault) {
         }
     );
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 LruMap.LruMap = LruMap; // hack so require("lru-map").LruMap will work in MontageJS
 
-Object.addEach(LruMap.prototype, GenericCollection.prototype);
-Object.addEach(LruMap.prototype, GenericMap.prototype);
-Object.addEach(LruMap.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(LruMap.prototype, GenericCollection.prototype);
+Object.hiveAddEach(LruMap.prototype, GenericMap.prototype);
+Object.hiveAddEach(LruMap.prototype, PropertyChanges.prototype);
 
 LruMap.prototype.constructClone = function (values) {
     return new this.constructor(
@@ -57,23 +57,23 @@ LruMap.prototype.stringify = function (item, leader) {
     return leader + JSON.stringify(item.key) + ": " + JSON.stringify(item.value);
 };
 
-LruMap.prototype.addMapChangeListener = function () {
+LruMap.prototype.hiveAddMapChangeListener = function () {
     if (!this.dispatchesMapChanges) {
         // Detect LRU deletions in the LruSet and emit as MapChanges.
         // Array and Heap have no store.
         // Dict and FastMap define no listeners on their store.
         var self = this;
-        this.store.addBeforeRangeChangeListener(function(plus, minus) {
+        this.store.hiveAddBeforeRangeChangeListener(function(plus, minus) {
             if (plus.length && minus.length) {  // LRU item pruned
                 self.dispatchBeforeMapChange(minus[0].key, undefined);
             }
         });
-        this.store.addRangeChangeListener(function(plus, minus) {
+        this.store.hiveAddRangeChangeListener(function(plus, minus) {
             if (plus.length && minus.length) {
                 self.dispatchMapChange(minus[0].key, undefined);
             }
         });
     }
-    GenericMap.prototype.addMapChangeListener.apply(this, arguments);
+    GenericMap.prototype.hiveAddMapChangeListener.apply(this, arguments);
 };
 

@@ -30,7 +30,7 @@ RangeChanges.prototype.getRangeChangeDescriptor = function (token) {
     return tokenChangeDescriptors.get(token);
 };
 
-RangeChanges.prototype.addRangeChangeListener = function (listener, token, beforeChange) {
+RangeChanges.prototype.hiveAddRangeChangeListener = function (listener, token, beforeChange) {
     // a concession for objects like Array that are not inherently observable
     if (!this.isObservable && this.makeObservable) {
         this.makeObservable();
@@ -128,8 +128,8 @@ RangeChanges.prototype.dispatchRangeChange = function (plus, minus, index, befor
     }, this);
 };
 
-RangeChanges.prototype.addBeforeRangeChangeListener = function (listener, token) {
-    return this.addRangeChangeListener(listener, token, true);
+RangeChanges.prototype.hiveAddBeforeRangeChangeListener = function (listener, token) {
+    return this.hiveAddRangeChangeListener(listener, token, true);
 };
 
 RangeChanges.prototype.removeBeforeRangeChangeListener = function (listener, token) {

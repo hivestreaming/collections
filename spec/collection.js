@@ -41,12 +41,12 @@ function describeCollection(Collection, values, setLike) {
         shouldHaveTheUsualContent(collection);
     });
 
-    describe("add", function () {
-        it("should add values to a collection", function () {
+    describe("hiveAdd", function () {
+        it("should hiveAdd values to a collection", function () {
             var collection = Collection();
-            expect(collection.add(a)).toBe(true);
-            expect(collection.add(b)).toBe(true);
-            expect(collection.add(c)).toBe(true);
+            expect(collection.hiveAdd(a)).toBe(true);
+            expect(collection.hiveAdd(b)).toBe(true);
+            expect(collection.hiveAdd(c)).toBe(true);
             shouldHaveTheUsualContent(collection);
         });
     });

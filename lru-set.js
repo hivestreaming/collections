@@ -23,15 +23,15 @@ function LruSet(values, capacity, equals, hash, getDefault) {
     this.getDefault = getDefault;
     this.capacity = capacity;
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 LruSet.LruSet = LruSet; // hack so require("lru-set").LruSet will work in MontageJS
 
-Object.addEach(LruSet.prototype, GenericCollection.prototype);
-Object.addEach(LruSet.prototype, GenericSet.prototype);
-Object.addEach(LruSet.prototype, PropertyChanges.prototype);
-Object.addEach(LruSet.prototype, RangeChanges.prototype);
+Object.hiveAddEach(LruSet.prototype, GenericCollection.prototype);
+Object.hiveAddEach(LruSet.prototype, GenericSet.prototype);
+Object.hiveAddEach(LruSet.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(LruSet.prototype, RangeChanges.prototype);
 
 LruSet.prototype.constructClone = function (values) {
     return new this.constructor(
@@ -54,23 +54,23 @@ LruSet.prototype.get = function (value, equals) {
     value = this.store.get(value);
     if (value !== undefined) {
         this.store["delete"](value);
-        this.store.add(value);
+        this.store.hiveAdd(value);
     } else {
         value = this.getDefault(value);
     }
     return value;
 };
 
-LruSet.prototype.add = function (value) {
+LruSet.prototype.hiveAdd = function (value) {
     var found = this.store.has(value);
     var plus = [], minus = [], eldest;
-    // if the value already exists, we delete it and add it back again so it
+    // if the value already exists, we delete it and hiveAdd it back again so it
     // appears at the end of the list of values to truncate
     if (found) {    // update
         this.store["delete"](value);
-        this.store.add(value);
-    } else if (this.capacity > 0) {    // add
-        // because minus is constructed before adding value, we must ensure the
+        this.store.hiveAdd(value);
+    } else if (this.capacity > 0) {    // hiveAdd
+        // because minus is constructed before hiveAdding value, we must ensure the
         // set has positive length. hence the capacity check.
         plus.push(value);
         if (this.length >= this.capacity) {
@@ -80,7 +80,7 @@ LruSet.prototype.add = function (value) {
         if (this.dispatchesRangeChanges) {
             this.dispatchBeforeRangeChange(plus, minus, 0);
         }
-        this.store.add(value);
+        this.store.hiveAdd(value);
         if (minus.length > 0) {
             this.store['delete'](eldest.value);
         }

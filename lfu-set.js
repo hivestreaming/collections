@@ -37,15 +37,15 @@ function LfuSet(values, capacity, equals, hash, getDefault) {
     this.getDefault = getDefault;
     this.capacity = capacity;
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 LfuSet.LfuSet = LfuSet; // hack so require("lfu-set").LfuSet will work in MontageJS
 
-Object.addEach(LfuSet.prototype, GenericCollection.prototype);
-Object.addEach(LfuSet.prototype, GenericSet.prototype);
-Object.addEach(LfuSet.prototype, PropertyChanges.prototype);
-Object.addEach(LfuSet.prototype, RangeChanges.prototype);
+Object.hiveAddEach(LfuSet.prototype, GenericCollection.prototype);
+Object.hiveAddEach(LfuSet.prototype, GenericSet.prototype);
+Object.hiveAddEach(LfuSet.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(LfuSet.prototype, RangeChanges.prototype);
 
 LfuSet.prototype.constructClone = function (values) {
     return new this.constructor(
@@ -74,7 +74,7 @@ LfuSet.prototype.get = function (value, equals) {
             nextFrequencyNode = new this.FrequencyNode(frequencyNode.frequency + 1, frequencyNode, nextFrequencyNode);
         }
 
-        nextFrequencyNode.values.add(node);
+        nextFrequencyNode.values.hiveAdd(node);
         node.frequencyNode = nextFrequencyNode;
         frequencyNode.values["delete"](node);
 
@@ -89,7 +89,7 @@ LfuSet.prototype.get = function (value, equals) {
     }
 };
 
-LfuSet.prototype.add = function (value) {
+LfuSet.prototype.hiveAdd = function (value) {
     // if the value already exists, get it so that its frequency increases
     if (this.has(value)) {
         this.get(value);
@@ -108,13 +108,13 @@ LfuSet.prototype.add = function (value) {
             this.dispatchBeforeRangeChange(plus, minus, 0);
         }
 
-        // removal must happen before addition, otherwise we could remove
-        // the value we are about to add
+        // removal must happen before hiveAddition, otherwise we could remove
+        // the value we are about to hiveAdd
         if (minus.length > 0) {
             this.store["delete"](leastFrequent);
             leastFrequentNode.values["delete"](leastFrequent);
             // Don't remove the frequencyNode with value of 1, because we
-            // are about to use it again in the addition.
+            // are about to use it again in the hiveAddition.
             if (leastFrequentNode.value !== 1 && leastFrequentNode.values.length === 0) {
                 this.frequencyHead.next = leastFrequentNode.next;
                 leastFrequentNode.next.prev = this.frequencyHead;
@@ -126,8 +126,8 @@ LfuSet.prototype.add = function (value) {
         if (frequencyNode.frequency !== 1) {
             frequencyNode = new this.FrequencyNode(1, this.frequencyHead, frequencyNode);
         }
-        this.store.add(node);
-        frequencyNode.values.add(node);
+        this.store.hiveAdd(node);
+        frequencyNode.values.hiveAdd(node);
         node.frequencyNode = frequencyNode;
 
         this.length = this.length + plus.length - minus.length;

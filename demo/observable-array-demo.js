@@ -3,15 +3,15 @@ require("../listen/array-changes");
 
 var array = [];
 
-array.addOwnPropertyChangeListener("length", function (length) {
+array.hiveAddOwnPropertyChangeListener("length", function (length) {
     console.log("changed", length);
 });
 
-array.addOwnPropertyChangeListener(0, function (value) {
+array.hiveAddOwnPropertyChangeListener(0, function (value) {
     console.log("array[0] changed to", value);
 });
 
-array.addMapChangeListener(function (value, key) {
+array.hiveAddMapChangeListener(function (value, key) {
     console.log(key, value);
 });
 

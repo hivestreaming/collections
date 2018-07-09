@@ -20,11 +20,11 @@ require("../shim");
 
 var objectHasOwnProperty = Object.prototype.hasOwnProperty;
 
-// Object property descriptors carry information necessary for adding,
+// Object property descriptors carry information necessary for hiveAdding,
 // removing, dispatching, and shorting events to listeners for property changes
 // for a particular key on a particular object.  These descriptors are used
 // here for shallow property changes.  The current listeners are the ones
-// modified by add and remove own property change listener methods.  During
+// modified by hiveAdd and remove own property change listener methods.  During
 // property change dispatch, we capture a snapshot of the current listeners in
 // the active change listeners array.  The descriptor also keeps a memo of the
 // corresponding handler method names.
@@ -110,7 +110,7 @@ PropertyChanges.prototype.hasOwnPropertyChangeDescriptor = function (key) {
     return true;
 };
 
-PropertyChanges.prototype.addOwnPropertyChangeListener = function (key, listener, beforeChange) {
+PropertyChanges.prototype.hiveAddOwnPropertyChangeListener = function (key, listener, beforeChange) {
     if (this.makeObservable && !this.isObservable) {
         this.makeObservable(); // particularly for observable arrays, for
         // their length property
@@ -132,8 +132,8 @@ PropertyChanges.prototype.addOwnPropertyChangeListener = function (key, listener
     };
 };
 
-PropertyChanges.prototype.addBeforeOwnPropertyChangeListener = function (key, listener) {
-    return PropertyChanges.addOwnPropertyChangeListener(this, key, listener, true);
+PropertyChanges.prototype.hiveAddBeforeOwnPropertyChangeListener = function (key, listener) {
+    return PropertyChanges.hiveAddOwnPropertyChangeListener(this, key, listener, true);
 };
 
 PropertyChanges.prototype.removeOwnPropertyChangeListener = function (key, listener, beforeChange) {
@@ -387,12 +387,12 @@ PropertyChanges.hasOwnPropertyChangeDescriptor = function (object, key) {
     }
 };
 
-PropertyChanges.addOwnPropertyChangeListener = function (object, key, listener, beforeChange) {
+PropertyChanges.hiveAddOwnPropertyChangeListener = function (object, key, listener, beforeChange) {
     if (!Object.isObject(object)) {
-    } else if (object.addOwnPropertyChangeListener) {
-        return object.addOwnPropertyChangeListener(key, listener, beforeChange);
+    } else if (object.hiveAddOwnPropertyChangeListener) {
+        return object.hiveAddOwnPropertyChangeListener(key, listener, beforeChange);
     } else {
-        return PropertyChanges.prototype.addOwnPropertyChangeListener.call(object, key, listener, beforeChange);
+        return PropertyChanges.prototype.hiveAddOwnPropertyChangeListener.call(object, key, listener, beforeChange);
     }
 };
 
@@ -414,8 +414,8 @@ PropertyChanges.dispatchOwnPropertyChange = function (object, key, value, before
     }
 };
 
-PropertyChanges.addBeforeOwnPropertyChangeListener = function (object, key, listener) {
-    return PropertyChanges.addOwnPropertyChangeListener(object, key, listener, true);
+PropertyChanges.hiveAddBeforeOwnPropertyChangeListener = function (object, key, listener) {
+    return PropertyChanges.hiveAddOwnPropertyChangeListener(object, key, listener, true);
 };
 
 PropertyChanges.removeBeforeOwnPropertyChangeListener = function (object, key, listener) {

@@ -6,8 +6,8 @@ console.log("\nignore non-unique values");
 var set = new Set([1, 1, 1, 2, 2, 2, 1, 2]);
 console.log(set.toArray());
 
-console.log("\nadd");
-set.add(3);
+console.log("\nhiveAdd");
+set.hiveAdd(3);
 console.log(set.toArray());
 
 console.log("\ndelete");

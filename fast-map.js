@@ -28,14 +28,14 @@ function FastMap(values, equals, hash, getDefault) {
         }
     );
     this.length = 0;
-    this.addEach(values);
+    this.hiveAddEach(values);
 }
 
 FastMap.FastMap = FastMap; // hack so require("fast-map").FastMap will work in MontageJS
 
-Object.addEach(FastMap.prototype, GenericCollection.prototype);
-Object.addEach(FastMap.prototype, GenericMap.prototype);
-Object.addEach(FastMap.prototype, PropertyChanges.prototype);
+Object.hiveAddEach(FastMap.prototype, GenericCollection.prototype);
+Object.hiveAddEach(FastMap.prototype, GenericMap.prototype);
+Object.hiveAddEach(FastMap.prototype, PropertyChanges.prototype);
 
 FastMap.prototype.constructClone = function (values) {
     return new this.constructor(

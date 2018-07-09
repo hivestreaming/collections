@@ -20,7 +20,7 @@ describe("SortedSet", function () {
 
         // TODO SortedSet compare and equals argument overrides
 
-        // construction, has, add, get, delete
+        // construction, has, hiveAdd, get, delete
         describeCollection(SortedSet, [1, 2, 3, 4], true);
 
         // comparable objects
@@ -39,7 +39,7 @@ describe("SortedSet", function () {
 
         // Happens to qualify as a deque, since the tests keep the content in
         // sorted order.  SortedSet has meaningful pop and shift operations, but
-        // push and unshift just add the arguments into their proper sorted
+        // push and unshift just hiveAdd the arguments into their proper sorted
         // positions rather than the ends.
         describeDeque(SortedSet);
 
@@ -333,7 +333,7 @@ describe("SortedSet", function () {
 
     });
 
-    describe("addRangeChangeListener", function () {
+    describe("hiveAddRangeChangeListener", function () {
         // fuzz cases
         for (var seed = 0; seed < 20; seed++) {
             (function (seed) {
@@ -345,10 +345,10 @@ describe("SortedSet", function () {
                 it("should bind content changes to an array for " + numbers.join(", "), function () {
                     var mirror = [];
                     var set = SortedSet();
-                    set.addRangeChangeListener(function (plus, minus, index) {
+                    set.hiveAddRangeChangeListener(function (plus, minus, index) {
                         mirror.swap(index, minus.length, plus);
                     });
-                    set.addEach(numbers);
+                    set.hiveAddEach(numbers);
                     expect(mirror.length).toBe(set.length);
                     mirror.forEach(function (n, i) {
                         expect(n).toBe(i);

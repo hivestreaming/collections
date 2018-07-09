@@ -16,7 +16,7 @@ function describeSet(Set, sorted) {
             var i = 0;
             set.forEach(function (value, key, object) {
                 expect(key).toBe(i++);
-                other.add(value);
+                other.hiveAdd(value);
                 expect(object).toBe(set);
             });
             expect(other.length).toBe(3);
@@ -39,10 +39,10 @@ function describeSet(Set, sorted) {
         expect(set.length).toBe(0);
     });
 
-    it("can add and delete an object", function () {
+    it("can hiveAdd and delete an object", function () {
         var set = new Set();
         var object = {};
-        set.add(object);
+        set.hiveAdd(object);
         expect(set.has(object)).toBe(true);
         set.delete(object);
         expect(set.length).toBe(0);
@@ -56,12 +56,12 @@ function describeSet(Set, sorted) {
     });
 
     if (!sorted) {
-        it("can add and delete objects from the same bucket", function () {
+        it("can hiveAdd and delete objects from the same bucket", function () {
             var a = {id: 0}, b = {id: 1};
             var set = new Set();
-            set.add(a);
+            set.hiveAdd(a);
             expect(set.has(a)).toBe(true);
-            set.add(b);
+            set.hiveAdd(b);
             expect(set.has(b)).toBe(true);
             set.delete(b);
             expect(set.has(b)).toBe(false);
@@ -71,17 +71,17 @@ function describeSet(Set, sorted) {
         });
     }
 
-    it("can readd a deleted object", function () {
+    it("can rehiveAdd a deleted object", function () {
         var set = new Set();
         var object = {};
-        set.add(object);
+        set.hiveAdd(object);
         expect(set.has(object)).toBe(true);
-        set.add(object);
+        set.hiveAdd(object);
         expect(set.length).toBe(1);
         set.delete(object);
         expect(set.length).toBe(0);
         expect(set.has(object)).toBe(false);
-        set.add(object);
+        set.hiveAdd(object);
         expect(set.length).toBe(1);
         expect(set.has(object)).toBe(true);
     });

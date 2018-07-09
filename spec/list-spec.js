@@ -39,11 +39,11 @@ describe("List", function () {
     // List(many).one()
     // List(values).iterate()
     // List(values) node.delete()
-    // List(values) node.addBefore(node)
-    // List(values) node.addAfter(node)
+    // List(values) node.hiveAddBefore(node)
+    // List(values) node.hiveAddAfter(node)
 
-    // List(values).{add,remove}RangeChangeListener
-    //      add
+    // List(values).{hiveAdd,remove}RangeChangeListener
+    //      hiveAdd
     //      delete
     //      push
     //      pop
@@ -51,8 +51,8 @@ describe("List", function () {
     //      unshift
     //      splice
     //      swap
-    // List(values).{add,remove}BeforeRangeChangeListener
-    //      add
+    // List(values).{hiveAdd,remove}BeforeRangeChangeListener
+    //      hiveAdd
     //      delete
     //      push
     //      pop
@@ -70,7 +70,7 @@ describe("List", function () {
         return new List(values);
     }
 
-    // construction, has, add, get, delete
+    // construction, has, hiveAdd, get, delete
     function newList(values) {
         return new List(values);
     }
@@ -170,7 +170,7 @@ describe("List", function () {
 
     });
 
-    // additional constraints on splice with regard to how it behaves when the
+    // hiveAdditional constraints on splice with regard to how it behaves when the
     // offset is provided as a node instead of a number
     describe("splice with nodes", function () {
 
