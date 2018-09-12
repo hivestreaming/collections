@@ -57,6 +57,7 @@
     "open": "0.0.5",
     "uglify-js": "^3.2.2"
   },
+  "typings" : "index.d.ts",
   "scripts": {
     "test": "node test/run-node.js",
     "build": "npm run build:browserify",
