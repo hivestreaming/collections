@@ -5,9 +5,9 @@ declare namespace SortedMap { }
 
 declare class SortedMap<K, V> {
 
-    constructor(values?: { [key: string]: V });
+    constructor(values?: { [key: string]: V }, equals?: (a: K, b: K) => boolean, compare?: (a: K, b: K) => number, getDefault?: () => V);
 
-    constructor(values?: { [key: number]: V });
+    constructor(values?: { [key: number]: V }, equals?: (a: K, b: K) => boolean, compare?: (a: K, b: K) => number, getDefault?: () => V);
 
     length: number;
 

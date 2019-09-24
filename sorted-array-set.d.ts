@@ -5,7 +5,7 @@ declare namespace SortedArraySet { }
 
 declare class SortedArraySet<V> {
 
-    constructor(values?: V[]);
+    constructor(values?: V[] | SortedArraySet<V>, equals?: (a: V, b: V) => boolean, compare?: (a: V, b: V) => number, getDefault?: () => V);
 
     length: number;
 
