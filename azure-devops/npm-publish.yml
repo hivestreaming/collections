@@ -35,4 +35,3 @@ extends:
     prePublish:
     - template: templates/install.yml
     - template: templates/update-name.yml
-    - template: templates/build.yml
