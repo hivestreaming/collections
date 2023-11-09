@@ -1,0 +1,10 @@
+parameters:
+  - name: packageJsonPath
+    type: string
+    default: package.json
+
+steps:
+  - script: |
+      npm install -g json -y
+      json -I -f ${{ parameters.packageJsonPath }} -e 'this.name="@hivestreaming/collections"'
+    displayName: 'Update package.json name'
