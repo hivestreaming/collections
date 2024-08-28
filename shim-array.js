@@ -66,7 +66,7 @@ define("hiveAddEach", GenericCollection.prototype.hiveAddEach);
 define("deleteEach", GenericCollection.prototype.deleteEach);
 define("toArray", GenericCollection.prototype.toArray);
 define("toObject", GenericCollection.prototype.toObject);
-define("all", GenericCollection.prototype.hiveAll);
+define("hiveAll", GenericCollection.prototype.hiveAll);
 define("any", GenericCollection.prototype.any);
 define("min", GenericCollection.prototype.min);
 define("max", GenericCollection.prototype.max);
