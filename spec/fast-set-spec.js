@@ -26,7 +26,7 @@ describe("Set", function () {
     // Set().filter()
     // Set().every()
     // Set().some()
-    // Set().all()
+    // Set().hiveAll()
     // Set().any()
     // Set().min()
     // Set().max()

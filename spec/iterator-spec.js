@@ -370,7 +370,7 @@ function shouldWorkWithConstructor(Iterator) {
             var input = test.next().value;
             var output = test.next().value;
             it("all of " + JSON.stringify(input) + " should be " + output, function () {
-                expect(Iterator(input).all()).toEqual(output);
+                expect(Iterator(input).hiveAll()).toEqual(output);
             });
         });
     });

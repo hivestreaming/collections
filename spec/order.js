@@ -236,8 +236,8 @@ function describeOrder(Collection) {
         ];
 
         tests.forEach(function (test) {
-            it(JSON.stringify(test[0]) + ".all() should be " + test[1], function () {
-                expect(Collection(test[0]).all()).toEqual(test[1]);
+            it(JSON.stringify(test[0]) + ".hiveAll() should be " + test[1], function () {
+                expect(Collection(test[0]).hiveAll()).toEqual(test[1]);
             });
         });
 

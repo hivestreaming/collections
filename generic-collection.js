@@ -131,7 +131,7 @@ GenericCollection.prototype.some = function (callback /*, thisp*/) {
     }, false);
 };
 
-GenericCollection.prototype.all = function () {
+GenericCollection.prototype.hiveAll = function () {
     return this.every(Boolean);
 };
 
